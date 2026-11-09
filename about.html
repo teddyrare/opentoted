@@ -100,6 +100,7 @@
     .chapter-media {
       display: flex;
       flex-direction: column;
+      padding: 64px 48px;
     }
 
     .media-placeholder {
@@ -152,10 +153,12 @@
 
     .chapter-img {
       width: 100%;
-      aspect-ratio: 4 / 3;
+      flex: 1;
+      min-height: 0;
       object-fit: cover;
       object-position: top center;
       display: block;
+      border-radius: 16px;
     }
 
     .chapter-media--double .chapter-img + .chapter-img {
