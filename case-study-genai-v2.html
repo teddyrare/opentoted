@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GenAI Learning Program — Ted White</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:    #000500;
+      --blue:     #80A4ED;
+      --burgundy: #773344;
+      --amber:    #FFAD05;
+      --purple:   #9B489B;
+      --white:    #F5F5F0;
+      --nav-h:    64px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #0d120d 0%, #030803 60%, var(--black) 100%);
+    }
+
+    .hero-icon {
+      position: absolute;
+      top: 50%;
+      right: -30%;
+      transform: translateY(-50%);
+      height: 120%;
+      width: auto;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-gradient-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, var(--black) 35%, transparent 70%),
+        linear-gradient(to top, rgba(0,5,0,0.95) 0%, transparent 35%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4.5vw, 56px);
+      line-height: 1.08;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .hero-blurb {
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(245, 245, 240, 0.65);
+      max-width: 520px;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 36px;
+      right: 80px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ─── STICKY NAV ────────────────────────────────────── */
+    .sticky-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(0, 5, 0, 0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(128, 164, 237, 0.08);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      padding: 0 48px;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
+    }
+
+    .sticky-nav.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .nav-items {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      list-style: none;
+      width: 100%;
+    }
+
+    .nav-item a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-chapter {
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: rgba(245, 245, 240, 0.25);
+      transition: color 0.3s ease;
+    }
+
+    .nav-title {
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      color: rgba(245, 245, 240, 0.3);
+      white-space: nowrap;
+      transition: color 0.3s ease;
+    }
+
+    .nav-item a:hover .nav-chapter,
+    .nav-item a:hover .nav-title {
+      color: rgba(245, 245, 240, 0.65);
+    }
+
+    .nav-item.active .nav-chapter,
+    .nav-item.active .nav-title {
+      color: var(--purple);
+      font-weight: 600;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 16px;
+      border-radius: 100px;
+      background: var(--purple);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 16px rgba(155, 72, 155, 0.4), 0 2px 6px rgba(0,0,0,0.3);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .nav-back:hover {
+      box-shadow: 0 6px 22px rgba(155, 72, 155, 0.55), 0 3px 8px rgba(0,0,0,0.3);
+      transform: translateY(-1px);
+    }
+
+    .hero-back {
+      position: absolute;
+      top: 32px;
+      left: 48px;
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 16px;
+      border-radius: 100px;
+      background: var(--purple);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(155, 72, 155, 0.4), 0 2px 6px rgba(0,0,0,0.3);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .hero-back:hover {
+      box-shadow: 0 6px 22px rgba(155, 72, 155, 0.55), 0 3px 8px rgba(0,0,0,0.3);
+      transform: translateY(-1px);
+    }
+
+    /* ─── HAMBURGER ─────────────────────────────────────── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      justify-self: end;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── DRAWER ─────────────────────────────────────────── */
+    .nav-drawer {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      right: 0;
+      z-index: 99;
+      background: rgba(0, 5, 0, 0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(128, 164, 237, 0.1);
+      padding: 8px 48px 20px;
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .nav-drawer.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .drawer-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drawer-items a {
+      display: block;
+      padding: 12px 0;
+      text-decoration: none;
+      color: rgba(245, 245, 240, 0.45);
+      font-size: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color 0.2s ease;
+    }
+
+    .drawer-items a:hover { color: var(--white); }
+
+    .drawer-items li.active a {
+      color: var(--purple);
+      font-weight: 600;
+    }
+
+    /* ─── RESPONSIVE BREAKPOINTS ────────────────────────── */
+    @media (max-width: 1024px) {
+      .nav-items { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    @media (max-width: 768px) {
+      .sections-wrap,
+      .static-sections {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      .section-content p,
+      .section-content ol { padding-left: 0; padding-right: 0; }
+      .static-section h2,
+      .static-section p { padding-left: 0; padding-right: 0; }
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      .section-content { padding-bottom: 60px; }
+      .sections-wrap { padding-bottom: 80px; }
+    }
+
+    /* ─── SECTIONS CONTAINER ────────────────────────────── */
+    .sections-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 160px;
+    }
+
+    /* ─── INDIVIDUAL SECTION ────────────────────────────── */
+    .cs-section {
+      position: relative;
+      transform-origin: top center;
+      scroll-margin-top: calc(var(--nav-h) + 24px);
+      will-change: opacity, transform;
+      opacity: 0;
+    }
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+      padding: 32px 0 20px;
+      border-top: 1px solid rgba(128, 164, 237, 0.07);
+      text-decoration: none;
+      color: inherit;
+      cursor: default;
+    }
+
+    .cs-section:first-child .section-header {
+      border-top: none;
+      padding-top: 60px;
+    }
+
+    .cs-section.past .section-header {
+      cursor: pointer;
+    }
+
+    .section-num {
+      font-size: 14px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--purple);
+      font-weight: 500;
+    }
+
+    .section-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 4vw, 48px);
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .section-body {
+      overflow: hidden;
+      will-change: opacity;
+      position: relative;
+    }
+
+    .section-bg-num {
+      position: absolute;
+      right: -24px;
+      top: -20px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 220px;
+      line-height: 1;
+      color: var(--blue);
+      opacity: 0.05;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .section-content {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 140px;
+    }
+
+    .section-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid rgba(128, 164, 237, 0.08);
+      border-radius: 3px;
+      margin-bottom: 36px;
+    }
+
+    .section-content p {
+      font-size: 17px;
+      line-height: 1.78;
+      color: rgba(245, 245, 240, 0.82);
+      margin-bottom: 22px;
+      padding: 0 24px;
+    }
+
+    .section-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-content ol {
+      margin: 0 0 22px 24px;
+      padding: 0 24px 0 0;
+    }
+
+    .section-content ol li {
+      font-size: 17px;
+      line-height: 1.78;
+      color: rgba(245, 245, 240, 0.82);
+      margin-bottom: 8px;
+    }
+
+    /* ─── POST-SCROLL SECTIONS ──────────────────────────── */
+    .static-sections {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 80px;
+    }
+
+    .static-divider {
+      border: none;
+      border-top: 1px solid rgba(128, 164, 237, 0.08);
+      margin-bottom: 72px;
+    }
+
+    .static-section {
+      margin-bottom: 64px;
+    }
+
+    .static-section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 4vw, 48px);
+      color: var(--white);
+      margin-bottom: 24px;
+      padding: 0 24px;
+    }
+
+    .static-section p {
+      font-size: 17px;
+      line-height: 1.78;
+      color: rgba(245, 245, 240, 0.82);
+      margin-bottom: 22px;
+      padding: 0 24px;
+    }
+
+    .static-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ─── CTA ───────────────────────────────────────────── */
+    .cs-cta {
+      text-align: center;
+      padding: 48px 0 24px;
+    }
+
+    .cs-cta p {
+      font-size: 19px;
+      color: rgba(245, 245, 240, 0.82);
+    }
+
+    .cs-cta a {
+      color: var(--blue);
+      text-decoration: none;
+      border-bottom: 1px solid var(--blue);
+      padding-bottom: 1px;
+    }
+
+    .cs-cta a:hover {
+      opacity: 0.75;
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    .site-footer {
+      text-align: center;
+      padding: 40px 48px 80px;
+      border-top: 1px solid rgba(128, 164, 237, 0.08);
+    }
+
+    .back-to-top {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(245, 245, 240, 0.35);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .back-to-top:hover {
+      color: var(--blue);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <a href="index.html" class="hero-back">← Back to Ted</a>
+    <div class="hero-bg"></div>
+    <img src="Graphics for GenAI Case Study/GenAI Icon/GenAI Icon.001.png" class="hero-icon" alt="">
+    <div class="hero-gradient-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Case Study &nbsp;·&nbsp; Learning Design</p>
+      <h1>GenAI Learning Program</h1>
+      <p class="hero-blurb">How we built a generative AI learning program that scaled across a large organization — and what it cost to get there. The data and names have been obscured for confidentiality. I've replaced this info with memes and pirates for my own amusement.</p>
+    </div>
+    <p class="scroll-cue">Scroll to explore ↓</p>
+  </section>
+
+  <!-- STICKY NAV -->
+  <nav class="sticky-nav" id="sticky-nav" aria-label="Section navigation">
+    <a href="index.html" class="nav-back">← Back to Ted</a>
+    <ul class="nav-items">
+      <li class="nav-item" data-index="0"><a href="#section-1"><span class="nav-chapter">Chapter 1:</span><span class="nav-title">The Comms Meeting</span></a></li>
+      <li class="nav-item" data-index="1"><a href="#section-2"><span class="nav-chapter">Chapter 2:</span><span class="nav-title">Setting Sail</span></a></li>
+      <li class="nav-item" data-index="2"><a href="#section-3"><span class="nav-chapter">Chapter 3:</span><span class="nav-title">A UX Detour</span></a></li>
+      <li class="nav-item" data-index="3"><a href="#section-4"><span class="nav-chapter">Chapter 4:</span><span class="nav-title">We Can Build It Again</span></a></li>
+      <li class="nav-item" data-index="4"><a href="#section-5"><span class="nav-chapter">Chapter 5:</span><span class="nav-title">Scaling the Program</span></a></li>
+      <li class="nav-item" data-index="5"><a href="#section-6"><span class="nav-chapter">Chapter 6:</span><span class="nav-title">The Cost of Scale</span></a></li>
+      <li class="nav-item" data-index="6"><a href="#section-7"><span class="nav-chapter">Chapter 7:</span><span class="nav-title">The Handoff</span></a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open chapter navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- CHAPTER DRAWER (mobile) -->
+  <div class="nav-drawer" id="nav-drawer">
+    <ul class="drawer-items">
+      <li class="drawer-item" data-index="0"><a href="#section-1">Chapter 1: The Comms Meeting</a></li>
+      <li class="drawer-item" data-index="1"><a href="#section-2">Chapter 2: Setting Sail</a></li>
+      <li class="drawer-item" data-index="2"><a href="#section-3">Chapter 3: A UX Detour</a></li>
+      <li class="drawer-item" data-index="3"><a href="#section-4">Chapter 4: We Can Build It Again</a></li>
+      <li class="drawer-item" data-index="4"><a href="#section-5">Chapter 5: Scaling the Program</a></li>
+      <li class="drawer-item" data-index="5"><a href="#section-6">Chapter 6: The Cost of Scale</a></li>
+      <li class="drawer-item" data-index="6"><a href="#section-7">Chapter 7: The Handoff</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTIONS -->
+  <div class="sections-wrap">
+
+    <section id="section-1" class="cs-section">
+      <a href="#section-1" class="section-header">
+        <span class="section-num">Chapter 1:</span>
+        <h2>The Comms Meeting</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">01</div>
+        <div class="section-content">
+          <img src="Graphics for GenAI Case Study/Graphics for Portfolio.1.png" alt="" class="section-img">
+          <p>My org's leadership saw the approach and integration of Generative AI on the horizon. Their response was to assign everyone in the org a series of self-paced eLearning modules. At the next town hall, someone asked a very good question. "What's next?" My boss's boss's boss's boss's boss smirked and said, "Code." A few engineers nodded, the rest of us non-technical folk looked on, waiting for the rest of the sentence.</p>
+          <p>I knew we could do better.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-2" class="cs-section">
+      <a href="#section-2" class="section-header">
+        <span class="section-num">Chapter 2:</span>
+        <h2>Setting Sail</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">02</div>
+        <div class="section-content">
+          <img src="Graphics for GenAI Case Study/Graphics for Portfolio.2.png" alt="" class="section-img">
+          <p>I partnered with a program manager, who I'll refer to as Smee. In Peter Pan lore, Smee is the first mate to Captain Hook. In this context, Smee and I were two pirates on a ship with thousands of privateers and dozens of Captain Hooks.</p>
+          <p>Smee had developed 4-5 hours of instructor-led courses, but they needed to be adapted for non-technical folks who were being asked to "use AI for your work." I pitched this adaptation to my leadership, they said it would be too big of a lift. The technology was too new and rapidly changing, requiring more oversight than our usual "set it and forget it" style of learning content.</p>
+          <p>I disagreed and moved forward with the project. The task ahead: learn as much as I could about GenAI and share my newfound knowledge with other folks whose brains go foggy when trying to learn Python.</p>
+          <p>I worked closely with Smee to develop a 60-minute pilot course that focused on having learners type prompts into our internal tools and talk about what they found. The format had me teaching, with Smee available to answer more technical questions (and correct me when I got something wrong during my own learning journey).</p>
+          <p>We delivered an early pilot to my director and his direct reports. Our audience liked the combination of my learner-led teaching style and Smee's deep technical expertise. We took the feedback and revised the session for a second pilot with my team. One thing we noticed: we were walking a very fine line between advising caution and discouraging curiosity and experimentation.</p>
+          <p>Then a learner said it plainly at the end of a session: "It sounds like you don't want us to use Generative AI at all." At first it was easy to dismiss ("you're conflating critical thinking with 'don't do that'"), but the spirit of the feedback was correct. We were leaning too hard into caution. I revised the content to include more encouragement and leaned into internal policy, which was also rapidly evolving.</p>
+          <p>With our internal pilot finished and recorded, I handed off my work to a trusted shipmate, who I'll refer to as Bones. Bones already had her hands full of rigging, but she is nothing if not capable. We had a course ready to go live, but there were several operational pieces that needed to be addressed before we could launch.</p>
+          <p>There were concerns about making GenAI learning content available to contractors. To address this, our learning management system needed to support enrollment restrictions by audience type. The internal tool landscape was also shifting quickly, with multiple AI platforms in early stages of development.</p>
+          <p>Long story short, there were a number of backend pieces that needed to fall into place before we could launch our new approach to learning content. I took an opportunity to work within a design team for three months. Bones would keep the ship afloat, and I figured the work would be in a more settled place when I returned.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-3" class="cs-section">
+      <a href="#section-3" class="section-header">
+        <span class="section-num">Chapter 3:</span>
+        <h2>A UX Detour</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">03</div>
+        <div class="section-content">
+          <img src="Graphics for GenAI Case Study/Graphics for Portfolio.3.png" alt="" class="section-img">
+          <p>I had already had inklings about the overlap between UX design and learning design, and thought it would be a good idea to learn new skills. I spent three months learning and practicing user research principles. I built wireframes, user layouts, and icons, all while embedded with a design crew inside my org. I learned that user research can give invaluable insights from conversations, rather than a dry, impersonal survey. I immediately knew what I wanted to do with this experience: run a pilot program of learner sentiment interviews for our live class attendees.</p>
+          <p>When I came back, I worked with Bones to get our GenAI for LL ready to go live on our internal learning site. After some small revisions and several backend pieces falling into place, we were finally ready to test this course for our internal audience of full-time crew members. We ran the session live for the first time via Webex. Having Bones teach gave me the opportunity to observe and assist with the virtual course, ask for interview volunteers, and gather insights without learners being biased. After all, if I was teaching the course, it would be a very biased interview if I asked them what they thought.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-4" class="cs-section">
+      <a href="#section-4" class="section-header">
+        <span class="section-num">Chapter 4:</span>
+        <h2>We Can Build It Again</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">04</div>
+        <div class="section-content">
+          <img src="Graphics for GenAI Case Study/Graphics for Portfolio.4.png" alt="" class="section-img">
+          <p>The interviews gave us three invaluable insights we couldn't glean from a survey. At first, our interviewees were very positive. After asking some follow-up questions, we learned the following:</p>
+          <ol>
+            <li>The prompting activities were very light and disconnected.</li>
+            <li>The tools we demonstrated were not representative of the tools most people were using at Apple, and new tools were being introduced across orgs all the time.</li>
+            <li>People left thinking "Ok, that was a good introduction, but...how do I use GenAI for MY work?"</li>
+          </ol>
+          <p>It was clear a 60-minute Webex wasn't going to be enough. We needed more. I revised the content to make the examples more practical and realistic, and restructured the activities so they built naturally on each other. I also realized the rapidly evolving landscape of Generative AI was going to require constant maintenance. If you'd like to read more about my approach to these learner sentiment interviews, there's a full case study for that (linked here).</p>
+          <p>I continued to help out with the teaching workload as the course gained steam. Other teams were noticing there was an internal GenAI training and they wanted it ASAP. I would regularly get messages from an org with hundreds of people wanting me to come teach. I also realized that with this level of interest, it would be a good idea to foster relationships with our compliance teams.</p>
+          <p>Trying to find all the compliance teams I needed to get approval was like a scavenger hunt where you keep making new friends. I met with Legal, Information Security, and more. I didn't approach these as one-off conversations; instead I set up monthly syncs with key partners for two reasons: the policy was changing all the time, and we could share information and broaden our own networks across a traditionally siloed company. Community!</p>
+          <p>Once we had all the approvals we needed, we officially launched GenAI for LL. It was the most attended session my team had ever run (after a Keynote course I also developed, which you can read about here).</p>
+          <p>At this point we had a good problem. Our course was so popular we continually reached the cap on attendance, and some folks had to wait a while to enroll. To address this, I wrote a follow-up course, GenAI for Privateering (again, an obscured title). This course built on the concepts introduced in GenAI for LL and acknowledged the complexity of the landscape head-on, while encouraging learners to embrace a spirit of curiosity. I also worked with our eLearning team to create a self-paced version to address those who couldn't register for the live class. This wouldn't be another "click through to the end" approach. I added the same prompting activities using our internal platform. Rather than a simulation, learners would interact with an LLM in real time, just like in GenAI for LL.</p>
+          <p>Bones and I knew early on that this series of courses couldn't be run by just two people. We needed to tap in the whole team.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-5" class="cs-section">
+      <a href="#section-5" class="section-header">
+        <span class="section-num">Chapter 5:</span>
+        <h2>Scaling the Program</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">05</div>
+        <div class="section-content">
+          <img src="Graphics for GenAI Case Study/Graphics for Portfolio.5.png" alt="" class="section-img">
+          <p>As we were building the course, I connected with other learning orgs at Apple to see what they were working toward. I reached out to Software University about a cross-functional collaboration. They declined.</p>
+          <p>Once the course was live and the numbers were impossible to ignore, both Software University and Apple University reached out to us to work together. We agreed on individual lanes: my crew owned the entry point, a practical, non-technical introduction. Software University owned the technical content. Apple University owned philosophy. We built a shared AI learning website together, and I made sure we were actively promoting each other's offerings and not duplicating effort.</p>
+          <p>With these two orgs on board, it was time to scale. We had a global team of trainers, and they all needed to be ramped up on the content. While we were promoting Software U and Apple U's classes, our content was also being promoted to their sizable audiences. I set up times that were friendly to my global colleagues to certify their delivery, share notes, and ensure they were confident with the material. We translated the content into Mandarin, Japanese, and Korean. This was a fun experiment with AI translation tools. I had no idea we were teaching folks in Korea about "chicken swords."</p>
+          <p>I was still teaching regularly myself. I believe teaching is a skill that gets sharper with practice and duller without. With sessions filling up faster than people could enroll, I started getting DMs from people higher up at Apple who wanted custom sessions. I agreed. I would meet with teams, find out the work they were doing, and build activities that aligned with the tools and processes they used. As a result, these sessions led to more and more requests like them. They didn't want just the content. They wanted me, Ted, to come teach something that was adapted to their work.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-6" class="cs-section">
+      <a href="#section-6" class="section-header">
+        <span class="section-num">Chapter 6:</span>
+        <h2>The Cost of Scale</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">06</div>
+        <div class="section-content">
+          <img src="Graphics for GenAI Case Study/Graphics for Portfolio.6.png" alt="" class="section-img">
+          <p>These sessions surfaced something I didn't anticipate. This approach to learning was unfamiliar to our global trainers. Historically, they had delivered a session via Webex and answered questions with clear answers. What this content required was much more intricate. There wasn't a simple answer to the questions our learners were asking. There was regional nuance with tool availability. Claude, for instance, is not available to users in mainland China. We had a wide range of knowledge across the trainer cohort, from genuine novices to people who didn't recognize their own knowledge gaps.</p>
+          <p>When I opened the floor to these conversations, I didn't realize how much my team needed to have a real, earnest conversation about the state of Generative AI. I started with a simple question: "How does everyone feel about GenAI?" What I got in response was a flood of fear, skepticism, and confusion. "I had a full on menty b," one trainer admitted. Another just shrugged: "If you want me to use it, I'll use it." I went into these trainer sentiment sessions ready to coach, and instead I became a therapist.</p>
+          <p>I shared my findings with leadership. We acknowledged the concern and kept moving. The conversation wasn't over, it was just going to continue.</p>
+          <p>There was a significant audience of contractors who were restricted from taking our course. As this group was being asked to use GenAI in their work, we were asked many times if we had a contractor-specific version and when it would be ready.</p>
+          <p>Initially, we launched our GenAI course for full-time employees only. The general concern was that our courses relied on critical thinking skills with GenAI. This wasn't technically considered a job you hire a contractor to do, yet more and more contractors were being asked to use Generative AI in their work. I leaned on my relationships with our compliance teams, told them we wanted to make our courses available to contractors.</p>
+          <p>The scavenger hunt for new friends continued. I made connections with teams in Legal who specialized in contractor language and we revised our coursework to align. After many revisions, we had a version ready to go.</p>
+          <p>Once we had compliance approval, a familiar tension resurfaced. Our team had built a very robust process for each step of the content development cycle, and it was too robust to keep up with a landscape that required constant revisions. Following the documented process for a content update would have meant another full round of global teach backs. That wasn't feasible.</p>
+          <p>So I shifted to a townhall-style approach. Rather than recording a Webex walkthrough of the updated trainer guide, I set up small group syncs, recorded them, and attended sessions to share feedback in real time. With two GenAI courses live and approved for both full time employees and contractors, maintaining them and communicating updates with our team on a weekly basis became my primary responsibility.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-7" class="cs-section">
+      <a href="#section-7" class="section-header">
+        <span class="section-num">Chapter 7:</span>
+        <h2>The Handoff</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">07</div>
+        <div class="section-content">
+          <img src="Graphics for GenAI Case Study/Graphics for Portfolio.7.png" alt="" class="section-img">
+          <p>After two years of building a GenAI Learning Program from scratch, it was time to hand off the program. I wanted to ensure the team taking over my work was set up for success. Using Claude, I built a step-by-step handoff guide with a prioritized roadmap for what was next, including a catalog of courses that never made it to launch, ready for someone to pick up. This was a unique opportunity to practice what I had been teaching: critical thinking, healthy skepticism, and the importance of context when working with LLMs. I had learned as much as I could, and was ready for the next adventure on the seven seas.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- IMPACT + WHAT I'D DO DIFFERENTLY -->
+  <div class="static-sections">
+    <hr class="static-divider">
+
+    <div class="static-section">
+      <h2>Impact</h2>
+      <p>People were (and most likely still are) confused, skeptical, and fearful of Generative AI, and the program was our attempt to directly address these concerns. Thousands of employees enrolled in the GenAI Learning Program, with more requesting our offerings every week. Every enrollment was elective. No mandate. Word of mouth was the primary driver.</p>
+      <p>This program not only boosted my team's credibility across my org, but also my org's credibility across the entire company. That is something I'm proud of. The strangest compliment I kept receiving was when teams would request for me to come deliver a GenAI session. Not my team. Me. I'm proud of that.</p>
+    </div>
+
+    <div class="static-section">
+      <h2>What I'd Do Differently</h2>
+      <p>In a perfect world, I would have started with executive sponsorship and organizational independence. The cross-functional content map took a year to build partly because I had to prove the program's value before anyone would co-invest. Starting with that alignment would have changed the trajectory significantly.</p>
+      <p>I'd also build a dedicated team for this work rather than adapting existing resources to fit a new kind of program. The other challenge was the reality of sustaining quality while the landscape shifted under the program. Tools changed constantly. Policy evolved constantly. What was accurate and true one day could be outdated info the next. The two-week revision cycle wasn't a process choice. It was a survival requirement.</p>
+      <p>One thing I didn't anticipate: I had to rebuild our content development pipeline at the same time I was rebuilding the courses. The existing process wasn't designed for a two-week revision cycle in a fast-moving space. Fixing the infrastructure while using it was slower and messier than it needed to be.</p>
+    </div>
+
+    <div class="cs-cta">
+      <p>Questions? <a href="mailto:opentoted@gmail.com">Get in touch.</a></p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <a href="#hero" class="back-to-top">Back to top ↑</a>
+  </footer>
+
+  <script>
+  (function () {
+    const hero        = document.getElementById('hero');
+    const stickyNav   = document.getElementById('sticky-nav');
+    const navItems    = Array.from(document.querySelectorAll('.nav-item'));
+    const drawerItems = Array.from(document.querySelectorAll('.drawer-item'));
+    const hamburger   = document.getElementById('nav-hamburger');
+    const drawer      = document.getElementById('nav-drawer');
+
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    hamburger.addEventListener('click', () => {
+      const opening = !drawer.classList.contains('open');
+      drawer.classList.toggle('open', opening);
+      hamburger.classList.toggle('open', opening);
+      hamburger.setAttribute('aria-expanded', String(opening));
+    });
+
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+    function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+    function lerp(a, b, t)    { return a + (b - a) * t; }
+
+    // Sticky nav visibility
+    new IntersectionObserver(
+      ([e]) => {
+        const visible = !e.isIntersecting;
+        stickyNav.classList.toggle('visible', visible);
+        if (!visible) closeDrawer();
+      },
+      { threshold: 0.05 }
+    ).observe(hero);
+
+    // Defer height measurement until images are loaded so short sections aren't clipped
+    let data = [];
+
+    function measureAndInit() {
+      data = Array.from(document.querySelectorAll('.cs-section')).map(sec => {
+        const body = sec.querySelector('.section-body');
+        body.style.height   = 'auto';
+        body.style.overflow = 'visible';
+        const bodyH = body.scrollHeight;
+        body.style.overflow = 'hidden';
+        body.style.height   = bodyH + 'px';
+        const secH = sec.offsetHeight;
+        return { sec, body, secH };
+      });
+      update();
+    }
+
+    window.addEventListener('load', measureAndInit);
+
+    const ACTIVE_Y    = 0.25;
+    const ENTRY_PRE   = 350;
+    const BOT_START_F = 0.78;
+    const BOT_END_F   = 0.06;
+
+    let ticking = false;
+
+    function update() {
+      if (!data.length) return;
+      const vH        = window.innerHeight;
+      const activeTop = vH * ACTIVE_Y;
+      const entryFrom = vH + Math.min(ENTRY_PRE, vH * 0.5);
+      const botStart  = vH * BOT_START_F;
+      const botEnd    = vH * BOT_END_F;
+
+      const tops = data.map(d => d.sec.getBoundingClientRect().top);
+
+      let navActive = -1;
+      let maxBodyOp = 0;
+
+      tops.forEach((top, i) => {
+        const { sec, body, secH } = data[i];
+        const bottom = top + secH;
+
+        const exitT  = clamp((botStart - bottom) / (botStart - botEnd), 0, 1);
+        const enterT = clamp((entryFrom - top) / (entryFrom - activeTop), 0, 1);
+
+        let secOpacity, bodyOpacity, scale;
+
+        if (top > entryFrom) {
+          secOpacity = 0; bodyOpacity = 0; scale = 0.82;
+        } else if (exitT > 0) {
+          secOpacity  = lerp(1, 0.2, exitT);
+          bodyOpacity = clamp(1 - exitT * 1.6, 0, 1);
+          scale       = 1;
+        } else {
+          secOpacity  = enterT;
+          bodyOpacity = enterT;
+          scale       = lerp(0.82, 1, enterT);
+        }
+
+        sec.style.opacity   = secOpacity.toFixed(3);
+        sec.style.transform = `scale(${scale.toFixed(4)})`;
+        body.style.opacity  = bodyOpacity.toFixed(3);
+
+        sec.classList.toggle('past', exitT >= 1);
+
+        if (bodyOpacity > maxBodyOp) { maxBodyOp = bodyOpacity; navActive = i; }
+      });
+
+      navItems.forEach((item, i) => item.classList.toggle('active', i === navActive));
+      drawerItems.forEach((item, i) => item.classList.toggle('active', i === navActive));
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+
+    update();
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+/* ── RESET ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── PALETTE ── */
+:root {
+  --black: #000500;
+  --blue: #80A4ED;
+  --burgundy: #773344;
+  --amber: #FFAD05;
+  --purple: #9B489B;
+  --white: #F4F2EE;
+}
+
+/* ── BASE ── */
+body {
+  background-color: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background-color: var(--black);
+  border-bottom: 1px solid rgba(128, 164, 237, 0.15);
+  z-index: 100;
+}
+
+.nav-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--purple);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  position: relative;
+  padding-bottom: 3px;
+  transition: opacity 0.15s ease;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--amber);
+  transition: width 0.2s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ── COPYRIGHT ── */
+.copyright {
+  text-align: center;
+  padding: 48px;
+  font-size: 12px;
+  color: var(--white);
+  opacity: 0.25;
+}

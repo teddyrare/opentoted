@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ted White — Practical Learning Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    /* ── HERO ── */
+    .hero {
+      padding: 140px 48px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 80px;
+    }
+
+    .hero-headline {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(60px, 9vw, 104px);
+      line-height: 1.02;
+      color: var(--white);
+      margin-bottom: 28px;
+    }
+
+    .hero-headline span {
+      color: var(--purple);
+    }
+
+    .hero-intro {
+      font-size: 20px;
+      line-height: 1.7;
+      color: var(--blue);
+      font-weight: 300;
+      max-width: 520px;
+    }
+
+    .hero-photo {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 20%;
+      flex-shrink: 0;
+    }
+
+    /* ── WORK ── */
+    .work {
+      padding: 0 48px 128px;
+    }
+
+    .work-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .work-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: 42px;
+      color: var(--white);
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    .cases-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .case-card {
+      display: block;
+      min-height: 340px;
+      padding: 48px;
+      border-radius: 20px;
+      border: 2px solid rgba(244, 242, 238, 0.35);
+      box-shadow: 0 0 48px rgba(244, 242, 238, 0.03);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .case-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #000500 30%, rgba(0,5,0,0.5) 60%, transparent 85%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .case-card:hover {
+      border-color: rgba(244, 242, 238, 0.65);
+      box-shadow: 0 0 64px rgba(244, 242, 238, 0.07);
+    }
+
+    .case-card-text {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      z-index: 2;
+      width: 55%;
+    }
+
+    .case-card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 4vw, 54px);
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .case-card-subtitle {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    .case-card-summary {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--blue);
+      font-weight: 300;
+      max-width: 540px;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    .case-card-visual {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 60%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      z-index: 0;
+    }
+
+    .case-card-icon {
+      height: 110%;
+      width: auto;
+      transform: translateX(10%);
+    }
+
+    .case-card-cta {
+      position: absolute;
+      bottom: 36px;
+      right: 44px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      opacity: 0.25;
+      z-index: 3;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .case-card-cta-text {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .case-card:hover .case-card-cta {
+      opacity: 0.8;
+      transform: translate(3px, -2px);
+    }
+
+    /* ── AI FLOAT BUTTON ── */
+    .ai-float-btn {
+      position: fixed;
+      bottom: 32px;
+      left: 32px;
+      z-index: 200;
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 16px;
+      border-radius: 100px;
+      background: var(--purple);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(155, 72, 155, 0.4), 0 2px 6px rgba(0,0,0,0.3);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .ai-float-btn:hover {
+      box-shadow: 0 6px 22px rgba(155, 72, 155, 0.55), 0 3px 8px rgba(0,0,0,0.3);
+      transform: translateY(-1px);
+    }
+
+    /* ── AI MODAL ── */
+    .ai-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(0, 5, 0, 0.75);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .ai-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .ai-modal {
+      background: #0d130d;
+      border: 1px solid rgba(128, 164, 237, 0.15);
+      border-radius: 16px;
+      padding: 48px;
+      max-width: 560px;
+      width: 90%;
+      position: relative;
+      transform: translateY(12px);
+      transition: transform 0.25s ease;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+
+    .ai-modal-backdrop.open .ai-modal {
+      transform: translateY(0);
+    }
+
+    .ai-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: rgba(245, 245, 240, 0.35);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: color 0.2s ease;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .ai-modal-close:hover {
+      color: var(--white);
+    }
+
+    .ai-modal h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: var(--white);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .ai-modal p {
+      font-size: 17px;
+      line-height: 1.75;
+      color: rgba(245, 245, 240, 0.82);
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Ted</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About Ted</a></li>
+      <li><a href="https://linkedin.com/in/teddyrare" target="_blank">LinkedIn</a></li>
+      <li><a href="mailto:opentoted@gmail.com">Email</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1 class="hero-headline">Hi. I'm <span>Ted.</span></h1>
+      <p class="hero-intro">I design learning based on how people work. I view a successful learning experience as a great conversation where both parties walk away having learned something they'll use going forward. Is it more work? Yes, but I prefer to do things the hard way. Otherwise, learners are checking Slack while I'm showing them my pretty slides.</p>
+    </div>
+    <img class="hero-photo" src="Images for Website Examples/ted-photo.jpg" alt="Ted White">
+  </section>
+
+  <section class="work" id="work">
+    <div class="work-inner">
+      <h2 class="work-heading">Here's what I've built...</h2>
+      <div class="cases-stack">
+
+        <a class="case-card" href="case-study-genai-v2.html">
+          <div class="case-card-text">
+            <h3 class="case-card-title">GenAI Learning Program</h3>
+            <p class="case-card-subtitle">Learning Experience Design · AI Literacy</p>
+            <p class="case-card-summary">I developed a learner-led program to build baseline AI literacy for employees and contractors at Apple. I've obscured names and data with pirate memes.</p>
+          </div>
+          <div class="case-card-visual">
+            <img src="Graphics for GenAI Case Study/GenAI Icon/GenAI Icon.001.png" class="case-card-icon" alt="">
+          </div>
+          <div class="case-card-cta">
+            <span class="case-card-cta-text">Read more</span>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M4 24 Q4 8 24 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M19 3 L24 8 L19 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+        <a class="case-card" href="#">
+          <div class="case-card-text">
+            <h3 class="case-card-title">Learner Experience Interviews</h3>
+            <p class="case-card-subtitle">Research · Measurement · Critical Thinking</p>
+            <p class="case-card-summary">I applied user research principles to our catalog of learning content to go deeper than our robust survey strategy. What we learned unlocked more relevant learning experiences than ever before.</p>
+          </div>
+          <div class="case-card-visual">
+            <div class="visual-placeholder">icon</div>
+          </div>
+          <div class="case-card-cta">
+            <span class="case-card-cta-text">Read more</span>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M4 24 Q4 8 24 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M19 3 L24 8 L19 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+        <a class="case-card" href="#">
+          <div class="case-card-text">
+            <h3 class="case-card-title">Keynote Upskilling</h3>
+            <p class="case-card-subtitle">Facilitation · Curriculum Design · Partnership</p>
+            <p class="case-card-summary">New folks at Apple were expected to know Keynote from the get go, after all it is Apple's flagship presentation software. I built a series of courses to help people make slides that don't suck.</p>
+          </div>
+          <div class="case-card-visual">
+            <div class="visual-placeholder">icon</div>
+          </div>
+          <div class="case-card-cta">
+            <span class="case-card-cta-text">Read more</span>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M4 24 Q4 8 24 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M19 3 L24 8 L19 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+        <a class="case-card" href="#">
+          <div class="case-card-text">
+            <h3 class="case-card-title">Video Production</h3>
+            <p class="case-card-subtitle">Writing · Direction · Production · On Camera</p>
+            <p class="case-card-summary">I write, direct, produce, and shine on camera, if I do say so myself. I've made training videos for Apple, directed and produced short comedy videos, created a YouTube cooking channel, and more.</p>
+          </div>
+          <div class="case-card-visual">
+            <div class="visual-placeholder">icon</div>
+          </div>
+          <div class="case-card-cta">
+            <span class="case-card-cta-text">Read more</span>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M4 24 Q4 8 24 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M19 3 L24 8 L19 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <div class="copyright">© 2026 Ted White</div>
+
+  <!-- FLOATING AI BUTTON -->
+  <button class="ai-float-btn" id="ai-float-btn">About AI</button>
+
+  <!-- AI MODAL -->
+  <div class="ai-modal-backdrop" id="ai-modal-backdrop">
+    <div class="ai-modal" role="dialog" aria-modal="true" aria-labelledby="ai-modal-title">
+      <button class="ai-modal-close" id="ai-modal-close" aria-label="Close">✕</button>
+      <h2 id="ai-modal-title">So...about AI</h2>
+      <p>I used Claude Code to build the HTML of this site. I did all the writing and image creation the old-fashioned way, by hand after staring at a blank screen. Claude helped with copyediting, spellcheck, and keeping me humble.</p>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const btn      = document.getElementById('ai-float-btn');
+    const backdrop = document.getElementById('ai-modal-backdrop');
+    const closeBtn = document.getElementById('ai-modal-close');
+
+    function openModal()  { backdrop.classList.add('open'); }
+    function closeModal() { backdrop.classList.remove('open'); }
+
+    btn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  })();
+  </script>
+
+</body>
+</html>

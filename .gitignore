@@ -1,0 +1,12 @@
+.DS_Store
+*.key
+*.HEIC
+*.pdf
+CLAUDE.md
+font-compare.html
+index-lightmode.html
+case-study-genai.html
+.claude/
+Graphics for GenAI Case Study/Old Graphics for Portfolio/
+Images for Website Examples/Website and Art Studies/
+Images for Website Examples/Welcome Banner.png

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Ted White</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    /* ── PAGE HEADER ── */
+    .about-header {
+      padding: 140px 48px 80px;
+      border-bottom: 1px solid rgba(128, 164, 237, 0.12);
+    }
+
+    .about-kicker {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+
+    .about-header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: 1.05;
+      color: var(--white);
+      max-width: 800px;
+      margin-bottom: 28px;
+    }
+
+    .about-tagline {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--blue);
+      max-width: 560px;
+      font-weight: 300;
+    }
+
+    /* ── CHAPTERS ── */
+    .chapter {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 80vh;
+      border-bottom: 1px solid rgba(128, 164, 237, 0.1);
+    }
+
+    /* Media goes right by default; .reverse puts it left */
+    .chapter.reverse .chapter-media {
+      order: -1;
+    }
+
+    .chapter--full {
+      display: flex;
+      justify-content: center;
+      padding: 80px 48px;
+    }
+
+    .chapter--full .chapter-text {
+      max-width: 720px;
+      width: 100%;
+      padding: 0;
+    }
+
+    /* ── TEXT SIDE ── */
+    .chapter-text {
+      display: flex;
+      align-items: center;
+      padding: 64px 48px;
+    }
+
+    .chapter-text-card {
+      background-color: var(--black);
+      border: 2px solid rgba(244, 242, 238, 0.35);
+      border-radius: 16px;
+      padding: 48px;
+      width: 100%;
+    }
+
+    .chapter-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 2.5vw, 36px);
+      line-height: 1.2;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .chapter-body {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--blue);
+    }
+
+    /* ── MEDIA SIDE ── */
+    .chapter-media {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .media-placeholder {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(128, 164, 237, 0.04);
+      color: rgba(244, 242, 238, 0.18);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .video-placeholder {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      background-color: rgba(255, 173, 5, 0.04);
+      color: rgba(244, 242, 238, 0.25);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .video-play-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 173, 5, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 173, 5, 0.45);
+    }
+
+    .media-caption {
+      padding: 14px 24px;
+      font-size: 14px;
+      font-style: italic;
+      color: rgba(244, 242, 238, 0.65);
+      border-top: 1px solid rgba(128, 164, 237, 0.15);
+      text-align: center;
+    }
+
+    .chapter-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .chapter-media--double .chapter-img + .chapter-img {
+      border-top: 1px solid rgba(128, 164, 237, 0.1);
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Ted</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://linkedin.com/in/teddyrare" target="_blank">LinkedIn</a></li>
+      <li><a href="mailto:opentoted@gmail.com">Email</a></li>
+    </ul>
+  </nav>
+
+  <header class="about-header">
+    <h1>Who Is This Guy?</h1>
+    <p class="about-tagline">Someone once said a person is a collection of their experiences. Me. I said that. But also BJ Neblett.</p>
+  </header>
+
+  <!-- 01 Shakespeare Summer Camp -->
+  <section class="chapter">
+    <div class="chapter-text">
+      <div class="chapter-text-card">
+        <h2 class="chapter-title">Camper > Camp Co-Director</h2>
+        <p class="chapter-body">I started as a camper, came back as a counselor, and eventually co-directed the whole thing. I taught Shakespeare and ran Adventures in Theater, a chaotic elective where we'd write, produce, and perform an original play with the kids in under two weeks. It was a blast. I outgrew the summer camp vibe eventually, but not before learning that I could hold a room and that kids would do remarkable things when you gave them creative ownership.</p>
+      </div>
+    </div>
+    <div class="chapter-media">
+      <img src="Images for Life Story/Pirate Photo Camp.jpg" alt="Ted in pirate costume at summer camp" class="chapter-img">
+      <p class="media-caption">I spent my summer job earnings on this costume.</p>
+    </div>
+  </section>
+
+  <!-- 02 Chicago / The Baloo Era -->
+  <section class="chapter reverse">
+    <div class="chapter-text">
+      <div class="chapter-text-card">
+        <h2 class="chapter-title">The Baloo Era</h2>
+        <p class="chapter-body">After college I moved to Chicago, took a job at a bankruptcy law firm, and learned something important: I did not want to be a bankruptcy lawyer. So I quit, got a job at Potbelly, and pursued acting. The highlight was being cast as Baloo in a children's theater production of The Jungle Book. The part I was born to play, baby. Meanwhile, I was training new hires and helping open new Potbelly locations. The pattern was already forming.</p>
+      </div>
+    </div>
+    <div class="chapter-media">
+      <img src="Images for Life Story/Baloo Pixelated.jpeg" alt="Ted as Baloo in a children's theater production of the Jungle Book" class="chapter-img" style="object-fit: contain; background-color: #000500;">
+      <p class="media-caption">A low res photo from Chicago Plays in 2006.</p>
+    </div>
+  </section>
+
+  <!-- 03 Trader Joe's -->
+  <section class="chapter">
+    <div class="chapter-text">
+      <div class="chapter-text-card">
+        <h2 class="chapter-title">Trader Joe's</h2>
+        <p class="chapter-body">I moved to New York in 2008 and got a job at Trader Joe's. Within six months I was training new hires. Nobody asked me to, it just kept happening. I eventually moved into leadership at one of the Manhattan stores, which taught me a lot about managing people in a high-pressure environment where the lines are long and everybody wants samples. I loved it and I burned out on it in roughly equal measure.</p>
+      </div>
+    </div>
+    <div class="chapter-media">
+      <img src="Images for Life Story/Proof I worked at Trader Joe´s.jpg" alt="Ted at the Trader Joe's counter" class="chapter-img">
+      <p class="media-caption">Trader Joe's in Manhattan could be fun sometimes.</p>
+    </div>
+  </section>
+
+  <!-- 04 Story Pirates -->
+  <section class="chapter reverse">
+    <div class="chapter-text">
+      <div class="chapter-text-card">
+        <h2 class="chapter-title">Story Pirates</h2>
+        <p class="chapter-body">I stepped down at Trader Joe's and spent my free time doing improv and indie comedy in leaky basements and empty hostel common rooms around the city. That work eventually got me a Story Pirates audition. Story Pirates adapts the writing of young people into live performances, music, podcasts, and videos. I spent ten years with the company teaching workshops, driving a van of equally quirky comedians around the tri-state area, producing shows. And writing, writing, writing.</p>
+      </div>
+    </div>
+    <div class="chapter-media">
+      <img src="Images for Life Story/Story Pirates.jpg" alt="Ted with Story Pirates" class="chapter-img">
+      <p class="media-caption">I complained about being left off the cast promo. The following year, the producers responded with this.</p>
+    </div>
+  </section>
+
+  <!-- 05 Acting -->
+  <section class="chapter">
+    <div class="chapter-text">
+      <div class="chapter-text-card">
+        <h2 class="chapter-title">Acting</h2>
+        <p class="chapter-body">I signed with acting agents and started booking commercial work, which forced me to get comfortable on camera fast. Teleprompter skills came through trial and a lot of error. To pay the rent between auditions, I led tours for The Ride, a multimedia bus experience, Scott's Pizza Tours, and TMZ around the city. Those gigs taught me something I've used ever since: if you can make a stranger feel seen, they'll remember you forever. Sometimes, they'll tip you too.</p>
+      </div>
+    </div>
+    <div class="chapter-media">
+      <img src="Images for Life Story/TMZ Tour.jpeg" alt="Ted leading a TMZ Tour in New York City" class="chapter-img" style="object-fit: contain; background-color: #000500;">
+      <p class="media-caption">Me on the job with TMZ Celebrity Tour. I don't remember why I'm holding this.</p>
+    </div>
+  </section>
+
+  <!-- 06 Apple Retail -->
+  <section class="chapter reverse">
+    <div class="chapter-text">
+      <div class="chapter-text-card">
+        <h2 class="chapter-title">Apple Retail</h2>
+        <p class="chapter-body">Burnt out from two jobs at once, I took what I thought was a step down: part-time at an Apple Store. Turns out Apple Store customers are WAY nicer than Trader Joe's customers in Manhattan, and I got selected to help onboard new team members for a six-month rotation. That rotation changed everything. My manager saw what I was doing and suggested I apply for a corporate role building learning programs. Twenty years of "survival jobs" had been building toward something I never could have planned: a "career."</p>
+      </div>
+    </div>
+    <div class="chapter-media">
+      <img src="Images for Life Story/Apple Retail.jpeg" alt="Ted at Apple Retail" class="chapter-img" style="object-fit: contain; background-color: #000500;">
+      <p class="media-caption">Apple TV+ Premiere.</p>
+    </div>
+  </section>
+
+  <!-- 07 Apple L&D -->
+  <section class="chapter">
+    <div class="chapter-text">
+      <div class="chapter-text-card">
+        <h2 class="chapter-title">Apple Corporate</h2>
+        <p class="chapter-body">My new career was the culmination of a lifetime of experience. I spent four years revamping our program from 60 minute lectures on Webex into learning experiences built around human beings and how they connect to their work. Apple has many smart people working there, and they're more than happy to tell you exactly what they think. We just had to listen. When GenAI became unavoidable, I worked with L&D teams across Apple to build a learner-led program to help people understand AI, not just use it.</p>
+      </div>
+    </div>
+    <div class="chapter-media">
+      <img src="Images for Life Story/Corporate Apple.jpeg" alt="Ted at Apple L&D" class="chapter-img">
+      <p class="media-caption">Executing my on-camera presence for internal instructional videos.</p>
+    </div>
+  </section>
+
+  <!-- 08 What's Next -->
+  <section class="chapter chapter--full">
+    <div class="chapter-text">
+      <div class="chapter-text-card">
+        <h2 class="chapter-title">What's Next</h2>
+        <p class="chapter-body">I left Apple in May 2026 after almost nine years. I had hit a ceiling and I knew it. Steve Jobs had a line about connecting the dots: you can't do it looking forward, only looking back. Looking back, the dots all make sense. Now I'm applying what I know about how people actually learn and making it available for everyone, not just in Apple's walled garden.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="copyright">© 2026 Ted White</div>
+
+</body>
+</html>
