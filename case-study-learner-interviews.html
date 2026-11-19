@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learner Experience Interviews — Ted White</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:    #000500;
+      --blue:     #80A4ED;
+      --burgundy: #773344;
+      --amber:    #FFAD05;
+      --purple:   #9B489B;
+      --white:    #F5F5F0;
+      --nav-h:    64px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #0d120d 0%, #030803 60%, var(--black) 100%);
+    }
+
+    .hero-icon {
+      position: absolute;
+      top: 50%;
+      right: -30%;
+      transform: translateY(-50%);
+      height: 120%;
+      width: auto;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-gradient-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, var(--black) 35%, transparent 70%),
+        linear-gradient(to top, rgba(0,5,0,0.95) 0%, transparent 35%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4.5vw, 56px);
+      line-height: 1.08;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .hero-blurb {
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(245, 245, 240, 0.65);
+      max-width: 520px;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 36px;
+      right: 80px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ─── STICKY NAV ────────────────────────────────────── */
+    .sticky-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(0, 5, 0, 0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(128, 164, 237, 0.08);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      padding: 0 48px;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
+    }
+
+    .sticky-nav.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .nav-items {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      list-style: none;
+      width: 100%;
+    }
+
+    .nav-item a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-chapter {
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: rgba(245, 245, 240, 0.25);
+      transition: color 0.3s ease;
+    }
+
+    .nav-title {
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      color: rgba(245, 245, 240, 0.3);
+      white-space: nowrap;
+      transition: color 0.3s ease;
+    }
+
+    .nav-item a:hover .nav-chapter,
+    .nav-item a:hover .nav-title {
+      color: rgba(245, 245, 240, 0.65);
+    }
+
+    .nav-item.active .nav-chapter,
+    .nav-item.active .nav-title {
+      color: var(--purple);
+      font-weight: 600;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 16px;
+      border-radius: 100px;
+      background: var(--purple);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 16px rgba(155, 72, 155, 0.4), 0 2px 6px rgba(0,0,0,0.3);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .nav-back:hover {
+      box-shadow: 0 6px 22px rgba(155, 72, 155, 0.55), 0 3px 8px rgba(0,0,0,0.3);
+      transform: translateY(-1px);
+    }
+
+    .hero-back {
+      position: absolute;
+      top: 32px;
+      left: 48px;
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 16px;
+      border-radius: 100px;
+      background: var(--purple);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(155, 72, 155, 0.4), 0 2px 6px rgba(0,0,0,0.3);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .hero-back:hover {
+      box-shadow: 0 6px 22px rgba(155, 72, 155, 0.55), 0 3px 8px rgba(0,0,0,0.3);
+      transform: translateY(-1px);
+    }
+
+    /* ─── HAMBURGER ─────────────────────────────────────── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      justify-self: end;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── DRAWER ─────────────────────────────────────────── */
+    .nav-drawer {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      right: 0;
+      z-index: 99;
+      background: rgba(0, 5, 0, 0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(128, 164, 237, 0.1);
+      padding: 8px 48px 20px;
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .nav-drawer.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .drawer-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drawer-items a {
+      display: block;
+      padding: 12px 0;
+      text-decoration: none;
+      color: rgba(245, 245, 240, 0.45);
+      font-size: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color 0.2s ease;
+    }
+
+    .drawer-items a:hover { color: var(--white); }
+
+    .drawer-items li.active a {
+      color: var(--purple);
+      font-weight: 600;
+    }
+
+    /* ─── RESPONSIVE BREAKPOINTS ────────────────────────── */
+    @media (max-width: 1024px) {
+      .nav-items { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    @media (max-width: 768px) {
+      .sections-wrap,
+      .static-sections {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      .section-content p,
+      .section-content ol { padding-left: 0; padding-right: 0; }
+      .static-section h2,
+      .static-section p { padding-left: 0; padding-right: 0; }
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      .section-content { padding-bottom: 60px; }
+      .sections-wrap { padding-bottom: 80px; }
+    }
+
+    /* ─── SECTIONS CONTAINER ────────────────────────────── */
+    .sections-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 160px;
+    }
+
+    /* ─── INDIVIDUAL SECTION ────────────────────────────── */
+    .cs-section {
+      position: relative;
+      transform-origin: top center;
+      scroll-margin-top: calc(var(--nav-h) + 24px);
+      will-change: opacity, transform;
+      opacity: 0;
+    }
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+      padding: 32px 0 20px;
+      border-top: 1px solid rgba(128, 164, 237, 0.07);
+      text-decoration: none;
+      color: inherit;
+      cursor: default;
+    }
+
+    .cs-section:first-child .section-header {
+      border-top: none;
+      padding-top: 60px;
+    }
+
+    .cs-section.past .section-header {
+      cursor: pointer;
+    }
+
+    .section-num {
+      font-size: 14px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--purple);
+      font-weight: 500;
+    }
+
+    .section-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 4vw, 48px);
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .section-body {
+      overflow: hidden;
+      will-change: opacity;
+      position: relative;
+    }
+
+    .section-bg-num {
+      position: absolute;
+      right: -24px;
+      top: -20px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 220px;
+      line-height: 1;
+      color: var(--blue);
+      opacity: 0.05;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .section-content {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 140px;
+    }
+
+    .section-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid rgba(128, 164, 237, 0.08);
+      border-radius: 3px;
+      margin-bottom: 36px;
+    }
+
+    .section-content p {
+      font-size: 17px;
+      line-height: 1.78;
+      color: rgba(245, 245, 240, 0.82);
+      margin-bottom: 22px;
+      padding: 0 24px;
+    }
+
+    .section-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-content ol {
+      margin: 0 0 22px 24px;
+      padding: 0 24px 0 0;
+    }
+
+    .section-content ol li {
+      font-size: 17px;
+      line-height: 1.78;
+      color: rgba(245, 245, 240, 0.82);
+      margin-bottom: 8px;
+    }
+
+    /* ─── POST-SCROLL SECTIONS ──────────────────────────── */
+    .static-sections {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 80px;
+    }
+
+    .static-divider {
+      border: none;
+      border-top: 1px solid rgba(128, 164, 237, 0.08);
+      margin-bottom: 72px;
+    }
+
+    .static-section {
+      margin-bottom: 64px;
+    }
+
+    .static-section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 4vw, 48px);
+      color: var(--white);
+      margin-bottom: 24px;
+      padding: 0 24px;
+    }
+
+    .static-section p {
+      font-size: 17px;
+      line-height: 1.78;
+      color: rgba(245, 245, 240, 0.82);
+      margin-bottom: 22px;
+      padding: 0 24px;
+    }
+
+    .static-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ─── CTA ───────────────────────────────────────────── */
+    .cs-cta {
+      text-align: center;
+      padding: 48px 0 24px;
+    }
+
+    .cs-cta p {
+      font-size: 19px;
+      color: rgba(245, 245, 240, 0.82);
+    }
+
+    .cs-cta a {
+      color: var(--blue);
+      text-decoration: none;
+      border-bottom: 1px solid var(--blue);
+      padding-bottom: 1px;
+    }
+
+    .cs-cta a:hover {
+      opacity: 0.75;
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    .site-footer {
+      text-align: center;
+      padding: 40px 48px 80px;
+      border-top: 1px solid rgba(128, 164, 237, 0.08);
+    }
+
+    .back-to-top {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(245, 245, 240, 0.35);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .back-to-top:hover {
+      color: var(--blue);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <a href="index.html" class="hero-back">← Back to Ted</a>
+    <div class="hero-bg"></div>
+    <img src="graphics for learner interviews/Learner Interview Graphic/Learner Interview Graphic.001.png" class="hero-icon" alt="">
+    <div class="hero-gradient-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Case Study &nbsp;·&nbsp; Learning Design</p>
+      <h1>Learner Experience Interviews</h1>
+      <p class="hero-blurb">What our survey scores were hiding, and what happened when we actually asked. Names and some details have been changed for confidentiality. Pirates are still involved.</p>
+    </div>
+    <p class="scroll-cue">Scroll to explore ↓</p>
+  </section>
+
+  <!-- STICKY NAV -->
+  <nav class="sticky-nav" id="sticky-nav" aria-label="Section navigation">
+    <a href="index.html" class="nav-back">← Back to Ted</a>
+    <ul class="nav-items">
+      <li class="nav-item" data-index="0"><a href="#section-1"><span class="nav-chapter">Chapter 1:</span><span class="nav-title">Survey Fatigue</span></a></li>
+      <li class="nav-item" data-index="1"><a href="#section-2"><span class="nav-chapter">Chapter 2:</span><span class="nav-title">We Talked to People?</span></a></li>
+      <li class="nav-item" data-index="2"><a href="#section-3"><span class="nav-chapter">Chapter 3:</span><span class="nav-title">Seven Seas of Stakeholders</span></a></li>
+      <li class="nav-item" data-index="3"><a href="#section-4"><span class="nav-chapter">Chapter 4:</span><span class="nav-title">What We Heard</span></a></li>
+      <li class="nav-item" data-index="4"><a href="#section-5"><span class="nav-chapter">Chapter 5:</span><span class="nav-title">What We Did With What We Heard</span></a></li>
+    </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open chapter navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- CHAPTER DRAWER (mobile) -->
+  <div class="nav-drawer" id="nav-drawer">
+    <ul class="drawer-items">
+      <li class="drawer-item" data-index="0"><a href="#section-1">Chapter 1: Survey Fatigue</a></li>
+      <li class="drawer-item" data-index="1"><a href="#section-2">Chapter 2: What if...hear me out...we talked to people?</a></li>
+      <li class="drawer-item" data-index="2"><a href="#section-3">Chapter 3: Sailing the Seven Seas of Stakeholders</a></li>
+      <li class="drawer-item" data-index="3"><a href="#section-4">Chapter 4: What We Heard</a></li>
+      <li class="drawer-item" data-index="4"><a href="#section-5">Chapter 5: What We Did With What We Heard</a></li>
+    </ul>
+  </div>
+
+  <!-- SECTIONS -->
+  <div class="sections-wrap">
+
+    <section id="section-1" class="cs-section">
+      <a href="#section-1" class="section-header">
+        <span class="section-num">Chapter 1:</span>
+        <h2>Survey Fatigue</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">01</div>
+        <div class="section-content">
+          <img src="graphics for learner interviews/learner interviews/learner interviews.001.png" alt="" class="section-img">
+          <p>Our learning team had a robust survey system. We sent a series of surveys to learners to gauge their sentiment about our courses: one before the session, one after, and a thank-you survey to close the loop.</p>
+          <p>If you've worked in tech, you already know: survey fatigue is real. Response rates are low, and the responses that do come in tend to skew positive. Everyone in tech knows their work is evaluated in part by survey scores, so they're generous. At a company like Apple, there was no shortage of guidance and methodology for collecting this kind of data. We had the infrastructure. We were using it.</p>
+          <p>And our scores were good. Really good. I love hearing what a good job I'm doing as much as anyone. But I'd just returned from a three-month UX researcher rotation, and I had a hunch that good scores and genuine insight weren't the same thing.</p>
+          <p>The approach would be the same as what I did during my rotation with users. This time, we'd ask them questions about the class they attended, rather than ask them to accomplish tasks in an app interface.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-2" class="cs-section">
+      <a href="#section-2" class="section-header">
+        <span class="section-num">Chapter 2:</span>
+        <h2>What if...hear me out...we talked to people?</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">02</div>
+        <div class="section-content">
+          <img src="graphics for learner interviews/learner interviews/learner interviews.002.png" alt="" class="section-img">
+          <p>The idea was set, and my leadership was on board. It helped that several of them had experience in user research. They understood what I was proposing and why it was worth the effort.</p>
+          <p>The course we'd be interviewing people about was our introductory GenAI class, which had recently launched with offerings available across all regions. If you haven't read <a href="case-study-genai-v2.html">that case study</a>, it's worth a look. The course was doing well by every metric we had. I wanted to know what the metrics weren't telling us.</p>
+          <p>Now I needed to tap into my network. Enter Calico.</p>
+          <p>Calico is an incredibly adept researcher with deep expertise in human behavior and what it actually takes to run an unbiased interview. We'd met on a separate project and had kept in monthly contact for about a year. I knew he had the knowledge to help me run these interviews by the book. What I didn't realize was how long and detailed that metaphorical book would turn out to be.</p>
+          <p>Calico and I met regularly throughout the planning process. He was invaluable: helping me develop consent forms, reviewing my interview script, and advising on how to navigate the approval process. Working with him was a crash course in what it actually means to run research responsibly in a company with 160,000 employees around the world.</p>
+          <p>One thing Calico and I both agreed on early: whoever was teaching the class shouldn't be present at the interviews. We needed learners to speak honestly about the content, not manage the feelings of the person who created it.</p>
+          <p>This was also a unique exercise for me, since I had written the course. I took my ego for a walk, gave it a high five, and asked it politely to step out of the room for the thirty-minute interviews.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-3" class="cs-section">
+      <a href="#section-3" class="section-header">
+        <span class="section-num">Chapter 3:</span>
+        <h2>Sailing the Seven Seas of Stakeholders</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">03</div>
+        <div class="section-content">
+          <img src="graphics for learner interviews/Chapter 3.gif" alt="" class="section-img">
+          <p>There are many considerations for what employees are approved to do. There are even more considerations depending on where that employee lives and works.</p>
+          <p>Calico knew this, and suggested I create three separate approval documents: one for AMR, one for EMEIA, and one for APAC. This would allow us to tailor our approach to align with regional policy. It also had a second, more important feature.</p>
+          <p>Regional approvals can take a while.</p>
+          <p>Fortunately, AMR's approval came through almost immediately. This meant we could start interviewing employees as long as they were based in North America. It also gave us time to refine our script and approach before the EMEIA and APAC approvals came through.</p>
+          <p>With our interview script approved, I gave Calico a virtual high five and thanked him profusely for his help. The rest was up to me. I went back to my team to ask for help running the interviews.</p>
+          <p>I had learned on my rotation that having a second person present was incredibly helpful, especially since some regions don't allow employees to be recorded. I needed someone to take notes so I could focus on what our volunteers were actually saying and ask follow-up questions.</p>
+          <p>Enter Anne. A fellow teammate, eager to learn and help out with this new approach to gathering insights. She had built data programs for our team before, and this human-centered approach was something new and intriguing for her.</p>
+          <p>Next, we needed volunteers. We attended live classes and asked the instructor to bring us on camera at the end of each session. If anyone was interested, they'd Slack us after. We got about a dozen folks over the course of several courses. Once they submitted a consent form, I put thirty minutes on their calendar.</p>
+          <p>To manage our data collection, we used an internal whiteboarding tool that let us capture individual insights on virtual sticky notes and affinitize them later. The system was in place. We were ready to go.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-4" class="cs-section">
+      <a href="#section-4" class="section-header">
+        <span class="section-num">Chapter 4:</span>
+        <h2>What We Heard</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">04</div>
+        <div class="section-content">
+          <img src="graphics for learner interviews/learner interviews/learner interviews.003.png" alt="" class="section-img">
+          <p>We ran about a dozen interviews over the course of the next couple of weeks, meeting folks who worked across a wide range of areas of Apple's business.</p>
+          <p>Anne took notes. I helped take notes too, while asking questions and following up. As expected, most people opened with generous feedback about the course and how well-written it was. I could hear my ego jumping for joy in the other room.</p>
+          <p>I set the expectation early that their feedback was welcome and that our goal was to make the course as helpful as possible. After the initial accolades, folks would open up once they realized we wouldn't get defensive. That's where the real findings started to appear.</p>
+          <p>One thing worth noting: we were the first internal GenAI course at Apple, which meant we were often the first people to formally ask employees what they actually thought about any of this. We got more than we asked for, and it was invaluable nonetheless.</p>
+          <p>Here's what we found out:</p>
+          <p><strong>The framing was leaving people disempowered.</strong> Learners described the course as feeling like a movie with a terrible ending. The caution-heavy approach we'd built was discouraging experimentation rather than encouraging responsible use.</p>
+          <p><strong>The internal tool landscape was overwhelming.</strong> Learners were arriving already confused by the sheer number of internal GenAI tools available to them. The chaos preceded the course content.</p>
+          <p><strong>One size wasn't fitting all.</strong> People wanted role-specific scenarios tied to their actual day-to-day work, not a general introduction. "Ok, but how do I use this for MY job?" was a recurring theme.</p>
+          <p><strong>And then there was the bonus finding.</strong> Our "global" volunteer pool wasn't actually global. Colleagues in APAC and EMEIA had trouble finding local participants, which meant most of our volunteers were AMR employees attending sessions at inconvenient hours from other time zones. Our sample had a blind spot we hadn't anticipated.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-5" class="cs-section">
+      <a href="#section-5" class="section-header">
+        <span class="section-num">Chapter 5:</span>
+        <h2>What We Did With What We Heard</h2>
+      </a>
+      <div class="section-body">
+        <div class="section-bg-num">05</div>
+        <div class="section-content">
+          <img src="graphics for learner interviews/learner interviews/learner interviews.004.png" alt="" class="section-img">
+          <p>So we ran all these interviews, got all this insight. Now what?</p>
+          <p>It was time to execute.</p>
+          <p>We revised the intro course to empower learners to keep experimenting with AI. Rather than leaning on caution, we leaned on the human aspect of working with these tools and balanced it with critical thinking. Curiosity over warning labels.</p>
+          <p>The internal tool landscape was genuinely overwhelming, and we hadn't been helping. In retrospect, our course had been unintentionally gaslighting learners by demonstrating just one tool as if the rest didn't exist. We shifted our approach: acknowledge the landscape, share resources, and let people orient themselves.</p>
+          <p>One size was right for an intro, but we needed to go further. Almost everyone at Apple makes a Keynote presentation at some point, so we built an activity around that. We encouraged learners to work on something real from their own work. No sharing required. If the content was sensitive, it stayed with them.</p>
+          <p>That activity sparked a bigger idea. What if we partnered directly with business units, learned about their actual work, and built activities around how internal AI tools could fit into it? I had contacts from a Keynote learning program I'd piloted previously, so I reached out to see if anyone was interested.</p>
+          <p>They were. You can read more about <a href="case-study-genai-v2.html">the GenAI learning program that followed</a>, as well as the Keynote Upskilling program that started it all.</p>
+          <p>These interviews gave us something no survey could: the real story underneath the good scores. We knew people had insights. We just had to ask them.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="static-sections">
+    <div class="cs-cta">
+      <p>Questions? <a href="mailto:opentoted@gmail.com">Get in touch.</a></p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <a href="#hero" class="back-to-top">Back to top ↑</a>
+  </footer>
+
+  <script>
+  (function () {
+    const hero        = document.getElementById('hero');
+    const stickyNav   = document.getElementById('sticky-nav');
+    const navItems    = Array.from(document.querySelectorAll('.nav-item'));
+    const drawerItems = Array.from(document.querySelectorAll('.drawer-item'));
+    const hamburger   = document.getElementById('nav-hamburger');
+    const drawer      = document.getElementById('nav-drawer');
+
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    hamburger.addEventListener('click', () => {
+      const opening = !drawer.classList.contains('open');
+      drawer.classList.toggle('open', opening);
+      hamburger.classList.toggle('open', opening);
+      hamburger.setAttribute('aria-expanded', String(opening));
+    });
+
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+    function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+    function lerp(a, b, t)    { return a + (b - a) * t; }
+
+    // Sticky nav visibility
+    new IntersectionObserver(
+      ([e]) => {
+        const visible = !e.isIntersecting;
+        stickyNav.classList.toggle('visible', visible);
+        if (!visible) closeDrawer();
+      },
+      { threshold: 0.05 }
+    ).observe(hero);
+
+    let data = [];
+
+    function measureAndInit() {
+      data = Array.from(document.querySelectorAll('.cs-section')).map(sec => {
+        const body = sec.querySelector('.section-body');
+        body.style.height   = 'auto';
+        body.style.overflow = 'visible';
+        const bodyH = body.scrollHeight;
+        body.style.overflow = 'hidden';
+        body.style.height   = bodyH + 'px';
+        const secH = sec.offsetHeight;
+        return { sec, body, secH };
+      });
+      update();
+    }
+
+    window.addEventListener('load', measureAndInit);
+
+    const ACTIVE_Y    = 0.25;
+    const ENTRY_PRE   = 350;
+    const BOT_START_F = 0.78;
+    const BOT_END_F   = 0.06;
+
+    let ticking = false;
+
+    function update() {
+      if (!data.length) return;
+      const vH        = window.innerHeight;
+      const activeTop = vH * ACTIVE_Y;
+      const entryFrom = vH + Math.min(ENTRY_PRE, vH * 0.5);
+      const botStart  = vH * BOT_START_F;
+      const botEnd    = vH * BOT_END_F;
+
+      const tops = data.map(d => d.sec.getBoundingClientRect().top);
+
+      let navActive = -1;
+      let maxBodyOp = 0;
+
+      tops.forEach((top, i) => {
+        const { sec, body, secH } = data[i];
+        const bottom = top + secH;
+
+        const exitT  = clamp((botStart - bottom) / (botStart - botEnd), 0, 1);
+        const enterT = clamp((entryFrom - top) / (entryFrom - activeTop), 0, 1);
+
+        let secOpacity, bodyOpacity, scale;
+
+        if (top > entryFrom) {
+          secOpacity = 0; bodyOpacity = 0; scale = 0.82;
+        } else if (exitT > 0) {
+          secOpacity  = lerp(1, 0.2, exitT);
+          bodyOpacity = clamp(1 - exitT * 1.6, 0, 1);
+          scale       = 1;
+        } else {
+          secOpacity  = enterT;
+          bodyOpacity = enterT;
+          scale       = lerp(0.82, 1, enterT);
+        }
+
+        sec.style.opacity   = secOpacity.toFixed(3);
+        sec.style.transform = `scale(${scale.toFixed(4)})`;
+        body.style.opacity  = bodyOpacity.toFixed(3);
+
+        sec.classList.toggle('past', exitT >= 1);
+
+        if (bodyOpacity > maxBodyOp) { maxBodyOp = bodyOpacity; navActive = i; }
+      });
+
+      navItems.forEach((item, i) => item.classList.toggle('active', i === navActive));
+      drawerItems.forEach((item, i) => item.classList.toggle('active', i === navActive));
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+
+    update();
+  })();
+  </script>
+
+</body>
+</html>
