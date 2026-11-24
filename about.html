@@ -165,6 +165,37 @@
       border-top: 1px solid rgba(128, 164, 237, 0.1);
     }
 
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .about-header {
+        padding: 100px 24px 48px;
+      }
+      .chapter {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .chapter-media {
+        order: -1;
+        padding: 24px 24px 0;
+        min-height: 260px;
+      }
+      .chapter-text {
+        padding: 2px 24px 48px;
+      }
+      .chapter-text-card {
+        padding: 32px 24px;
+        border-radius: 0 0 16px 16px;
+      }
+      .chapter-img {
+        flex: none;
+        height: 260px;
+        width: 100%;
+        border-radius: 12px 12px 0 0;
+      }
+      .chapter--full {
+        padding: 48px 24px;
+      }
+    }
 
   </style>
 </head>

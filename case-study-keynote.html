@@ -318,6 +318,27 @@
       .sections-wrap { padding-bottom: 80px; }
     }
 
+    @media (max-width: 768px) and (orientation: portrait) {
+      .hero {
+        padding: 60px 24px;
+      }
+      .hero-icon {
+        top: 35%;
+        right: auto;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 55%;
+        opacity: 0.75;
+      }
+      .hero-gradient-overlay {
+        background:
+          linear-gradient(to top, var(--black) 25%, rgba(0,5,0,0.55) 50%, transparent 65%);
+      }
+      .scroll-cue {
+        right: 24px;
+      }
+    }
+
     /* ─── SECTIONS CONTAINER ────────────────────────────── */
     .sections-wrap {
       max-width: 860px;

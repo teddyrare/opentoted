@@ -84,6 +84,16 @@ nav {
   width: 100%;
 }
 
+/* ── NAV MOBILE ── */
+@media (max-width: 768px) {
+  nav {
+    padding: 0 20px;
+  }
+  .nav-links {
+    gap: 20px;
+  }
+}
+
 /* ── COPYRIGHT ── */
 .copyright {
   text-align: center;

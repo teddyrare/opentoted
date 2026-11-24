@@ -206,6 +206,13 @@
       transform: translateY(-1px);
     }
 
+    @media (max-width: 768px) {
+      .ai-float-btn {
+        padding: 12px 22px;
+        font-size: 15px;
+      }
+    }
+
     /* ── AI MODAL ── */
     .ai-modal-backdrop {
       position: fixed;
@@ -273,6 +280,56 @@
       font-size: 17px;
       line-height: 1.75;
       color: rgba(245, 245, 240, 0.82);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 100px 24px 56px;
+        gap: 32px;
+      }
+      .hero-intro {
+        max-width: 100%;
+      }
+      .hero-photo {
+        width: 180px;
+        height: 180px;
+        margin: 0 auto;
+        display: block;
+      }
+      .work {
+        padding: 0 20px 72px;
+      }
+      .case-card {
+        padding: 32px 24px 60px;
+        min-height: 200px;
+      }
+      .case-card::before {
+        background: none;
+      }
+      .case-card-text {
+        width: 100%;
+      }
+      .case-card-visual {
+        width: 100%;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+      }
+      .case-card-icon {
+        height: 80%;
+        transform: none;
+        opacity: 0.17;
+      }
+      .case-card-title {
+        font-size: clamp(28px, 7vw, 42px);
+      }
+      .case-card-cta {
+        bottom: 20px;
+        right: 20px;
+        opacity: 0.8;
+      }
     }
 
   </style>
