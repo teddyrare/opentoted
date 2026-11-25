@@ -128,8 +128,16 @@
   const pirateBackdrop = document.getElementById('pirate-modal-backdrop');
   const pirateClose    = document.getElementById('pirate-modal-close');
 
-  function openPirate()  { pirateBackdrop.classList.add('open'); }
-  function closePirate() { pirateBackdrop.classList.remove('open'); }
+  function openPirate() {
+    pirateBackdrop.style.display = 'flex';
+    requestAnimationFrame(() => pirateBackdrop.classList.add('open'));
+  }
+  function closePirate() {
+    pirateBackdrop.classList.remove('open');
+    pirateBackdrop.addEventListener('transitionend', () => {
+      pirateBackdrop.style.display = 'none';
+    }, { once: true });
+  }
 
   pirateBtn.addEventListener('click', openPirate);
   pirateClose.addEventListener('click', closePirate);
