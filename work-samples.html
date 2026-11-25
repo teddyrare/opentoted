@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Samples — Ted White</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    /* ── PAGE HEADER ── */
+    .samples-header {
+      padding: 140px 48px 80px;
+      border-bottom: 1px solid rgba(128, 164, 237, 0.12);
+    }
+
+    .samples-header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: 1.05;
+      color: var(--white);
+      max-width: 800px;
+      margin-bottom: 28px;
+    }
+
+    .samples-tagline {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--blue);
+      max-width: 560px;
+      font-weight: 300;
+    }
+
+    /* ── SAMPLE ITEM ── */
+    .sample {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 60vh;
+      border-bottom: 1px solid rgba(128, 164, 237, 0.1);
+    }
+
+    .sample-media {
+      display: flex;
+      flex-direction: column;
+      padding: 64px 48px;
+    }
+
+    .sample-img {
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border-radius: 16px;
+    }
+
+    .sample-text {
+      display: flex;
+      align-items: center;
+      padding: 64px 48px;
+    }
+
+    .sample-text-card {
+      background-color: var(--black);
+      border: 2px solid rgba(244, 242, 238, 0.35);
+      border-radius: 16px;
+      padding: 48px;
+      width: 100%;
+    }
+
+    .sample-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 2.5vw, 36px);
+      line-height: 1.2;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .sample-body {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--blue);
+      margin-bottom: 32px;
+    }
+
+    .sample-link {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--purple);
+      text-decoration: none;
+      border: 2px solid var(--purple);
+      border-radius: 100px;
+      padding: 10px 24px;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .sample-link:hover {
+      background-color: var(--purple);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(155, 72, 155, 0.35);
+    }
+
+    /* ── FOOTER NOTE ── */
+    .samples-footer-note {
+      padding: 64px 48px;
+      text-align: center;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(244, 242, 238, 0.45);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .samples-header {
+        padding: 100px 24px 48px;
+      }
+      .sample {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .sample-media {
+        padding: 24px 24px 0;
+        min-height: 260px;
+      }
+      .sample-text {
+        padding: 2px 24px 48px;
+      }
+      .sample-text-card {
+        padding: 32px 24px;
+        border-radius: 0 0 16px 16px;
+      }
+      .sample-img {
+        flex: none;
+        height: 260px;
+        width: 100%;
+        border-radius: 12px 12px 0 0;
+      }
+      .samples-footer-note {
+        padding: 48px 24px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="header-back">← Back to Ted</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About Ted</a></li>
+      <li><a href="work-samples.html" class="active">Work Samples</a></li>
+      <li><a href="https://linkedin.com/in/teddyrare" target="_blank">LinkedIn</a></li>
+      <li><a href="mailto:opentoted@gmail.com">Email</a></li>
+    </ul>
+  </nav>
+
+  <header class="samples-header">
+    <h1>Work Samples</h1>
+    <p class="samples-tagline">All my work at Apple is obscured intentionally for confidentiality. Here are some work samples I can actually show you.</p>
+  </header>
+
+  <section class="sample">
+    <div class="sample-media">
+      <img src="Cooking With Ted Channel Tile.jpg" alt="Cooking with Ted YouTube channel" class="sample-img">
+    </div>
+    <div class="sample-text">
+      <div class="sample-text-card">
+        <h2 class="sample-title">Cooking with Ted</h2>
+        <p class="sample-body">I made a cooking YouTube channel during the pandemic as a fun experiment. I learned a lot about Final Cut, video production in a small apartment, and instructional design.</p>
+        <a href="http://www.youtube.com/@cookingwithted1" target="_blank" class="sample-link">Watch on YouTube</a>
+      </div>
+    </div>
+  </section>
+
+  <p class="samples-footer-note">More learning content will be added here as I make it.</p>
+
+  <div class="copyright">© 2026 Ted White</div>
+
+</body>
+</html>
