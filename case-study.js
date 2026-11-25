@@ -24,11 +24,14 @@
   function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
   function lerp(a, b, t)    { return a + (b - a) * t; }
 
-  // Sticky nav visibility
+  // Sticky nav + pirate button visibility (both tied to hero leaving viewport)
+  const pirateBtn = document.getElementById('pirate-float-btn');
+
   new IntersectionObserver(
     ([e]) => {
       const visible = !e.isIntersecting;
       stickyNav.classList.toggle('visible', visible);
+      if (pirateBtn) pirateBtn.classList.toggle('visible', visible);
       if (!visible) closeDrawer();
     },
     { threshold: 0.05 }
@@ -112,4 +115,24 @@
   }, { passive: true });
 
   update();
+
+  // Scroll cue fade
+  const scrollCue = document.querySelector('.scroll-cue');
+  function updateScrollCue() {
+    if (scrollCue) scrollCue.classList.toggle('hidden', window.scrollY > 80);
+  }
+  window.addEventListener('scroll', updateScrollCue, { passive: true });
+  updateScrollCue();
+
+  // Pirate modal
+  const pirateBackdrop = document.getElementById('pirate-modal-backdrop');
+  const pirateClose    = document.getElementById('pirate-modal-close');
+
+  function openPirate()  { pirateBackdrop.classList.add('open'); }
+  function closePirate() { pirateBackdrop.classList.remove('open'); }
+
+  pirateBtn.addEventListener('click', openPirate);
+  pirateClose.addEventListener('click', closePirate);
+  pirateBackdrop.addEventListener('click', (e) => { if (e.target === pirateBackdrop) closePirate(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePirate(); });
 })();
