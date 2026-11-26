@@ -209,7 +209,19 @@
       <li><a href="https://linkedin.com/in/teddyrare" target="_blank">LinkedIn</a></li>
       <li><a href="mailto:opentoted@gmail.com">Email</a></li>
     </ul>
+    <button class="page-hamburger" id="page-hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="page-drawer" id="page-drawer">
+    <ul class="page-drawer-links">
+      <li><a href="about.html" class="active">About Ted</a></li>
+      <li><a href="work-samples.html">Work Samples</a></li>
+      <li><a href="https://linkedin.com/in/teddyrare" target="_blank">LinkedIn</a></li>
+      <li><a href="mailto:opentoted@gmail.com">Email</a></li>
+    </ul>
+  </div>
 
   <header class="about-header">
     <h1>Who Is This Guy?</h1>
@@ -325,6 +337,32 @@
   </section>
 
   <div class="copyright">© 2026 Ted White</div>
+
+  <script>
+  (function () {
+    const hamburger = document.getElementById('page-hamburger');
+    const drawer    = document.getElementById('page-drawer');
+
+    function openMenu()  {
+      drawer.classList.add('open');
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu() {
+      drawer.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    hamburger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      drawer.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    document.addEventListener('click', function (e) {
+      if (!drawer.contains(e.target)) closeMenu();
+    });
+  })();
+  </script>
 
 </body>
 </html>
