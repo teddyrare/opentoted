@@ -209,6 +209,35 @@ nav {
   }
 }
 
+/* ── PAGE HEADER (about, work samples) ── */
+.page-header {
+  padding: 140px 48px 80px;
+  border-bottom: 1px solid rgba(128, 164, 237, 0.12);
+}
+
+.page-header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(52px, 7vw, 96px);
+  line-height: 1.05;
+  color: var(--white);
+  max-width: 800px;
+  margin-bottom: 28px;
+}
+
+.page-tagline {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--blue);
+  max-width: 560px;
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding: 100px 24px 48px;
+  }
+}
+
 /* ── COPYRIGHT ── */
 .copyright {
   text-align: center;
